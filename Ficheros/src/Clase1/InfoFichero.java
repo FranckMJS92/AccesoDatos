@@ -1,3 +1,4 @@
+package Clase1;
 import java.io.File;
 
 public class InfoFichero {

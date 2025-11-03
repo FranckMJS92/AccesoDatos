@@ -26,7 +26,7 @@ public class Ejemplo1_DataStreams {
         // LECTURA
         try (DataInputStream m = new DataInputStream(new FileInputStream(ruta))) {
 
-            // IMPORTANTE: tenemos que leer en el mis o ornde en el que se ha escrito
+            // IMPORTANTE: tenemos que leer en el mismo orden en el que se ha escrito
             int i = m.readInt();
             String s = m.readUTF();
             double d = m.readDouble();
