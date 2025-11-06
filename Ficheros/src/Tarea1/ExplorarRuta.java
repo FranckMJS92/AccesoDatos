@@ -22,13 +22,11 @@ public class ExplorarRuta {
 
             if (f.isDirectory()) {
                 String contenido[] = f.list();
-                int count = 0;
                 for (String nombre : contenido) {
                     System.out.println(nombre);
-                    count++;
                 }
 
-                System.out.println("El directorio tiene : " + count + " elementos");
+                System.out.println("El directorio tiene : " + contenido.length + " elementos");
 
             }
 
