@@ -1,8 +1,6 @@
 
 <h1 align="center">PROYECTO BASE DE DATOS</h1>
 
----
-
 Proyecto para las clases de conexión con bases de datos
 
 ## ESTRUCTURA DE CARPETAS
