@@ -12,7 +12,7 @@ import java.sql.PreparedStatement;
 public class ConsultasBDJuegos {
 
     // 1. Datos de la conexión
-    private static final String URL = "jdbc:h2:./Clase5/BDJuegos";
+    private static final String URL = "jdbc:h2:./src/Clase5/BDJuegos";
 
     // usuario por defecto de H2
     private static final String USER = "sa";
