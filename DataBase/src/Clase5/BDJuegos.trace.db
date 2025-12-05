@@ -1,0 +1,3 @@
+2025-12-05 17:42:39.938109+01:00 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "JUEGO" not found (this database is empty); SQL statement:
+SELECT ID, NOMBRE, GENERO, PUNTUACION FROM JUEGO [42104-240]

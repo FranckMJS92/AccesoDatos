@@ -16,10 +16,15 @@ public class ActividadBD {
     private static final String USER = "sa";
     private static final String PASS = "";
 
+    // Objeto Scanner para leer datos de teclado
+    private static Scanner scan = new Scanner(System.in);
+
     public static void main(String[] args) {
-        // Objeto Scanner para leer datos de teclado
-        Scanner scan = new Scanner(System.in);
-        byte option = 0;
+
+        byte option;
+        // Variables para peticion de datos en INSERT / UPDATE
+        String nombre = "";
+        double puntuacion = 0;
 
         try {
 
@@ -36,23 +41,13 @@ public class ActividadBD {
                     System.out.println("1. Consultar y mostrar todos los juegos");
                     System.out.println("2. Insertar un nuevo juego");
                     System.out.println("3. Actualizar la puntuación de un juego");
-                    System.out.println("4. Borrar un juego (por nombre o ID");
+                    System.out.println("4. Borrar un juego por ID");
                     System.out.println("5. Salir");
-
+                    // Inicializo option
+                    option = 0;
                     // Validar que la entrada sea un número
-                    boolean entradaValida = false;
-                    while (!entradaValida) {
-                        System.out.print("Seleccione una opción (1-5): ");
-
-                        if (scan.hasNextByte()) {
-                            option = scan.nextByte();
-                            entradaValida = true;
-
-                        } else {
-                            System.out.println("¡Error! Debe ingresar un número válido.");
-                            scan.next(); // Limpiar el buffer
-                        }
-                    }
+                    System.out.print("Seleccione una opción (1-5): ");
+                    option = (byte) validaNumbero(option);
 
                     // Procesar la opción válida
                     switch (option) {
@@ -62,15 +57,41 @@ public class ActividadBD {
                             break;
                         case 2:
                             System.out.println("\nInsertando nuevo juego...");
-                            insertarNuevoJuego(conn, "Minecraft", "Acción", 10);
+
+                            System.out.println("¿Qué juego quieres agregar? ...");
+                            // Línea para limpiar el buffer
+                            scan.nextLine();
+                            System.out.print("Nombre del juego: ");
+                            nombre = scan.nextLine();
+
+                            System.out.print("Genero: ");
+                            String genero = scan.nextLine();
+
+                            System.out.print("Puntuacion : ");
+                            puntuacion = validaNumbero(puntuacion);
+
+                            insertarNuevoJuego(conn, nombre, genero, puntuacion);
                             break;
                         case 3:
                             System.out.println("\nActualizando puntuación...");
-                            actualizarPuntuacion(conn, "Minecraft", 5.3);
+
+                            System.out.println("¿Que juego quiere actualizar? : ");
+                            // Línea para limpiar el buffer
+                            scan.nextLine();
+                            System.out.print("Nombre del juego: ");
+                            nombre = scan.nextLine();
+
+                            System.out.print("Puntuacion : ");
+                            puntuacion = validaNumbero(puntuacion);
+
+                            actualizarPuntuacion(conn, nombre, puntuacion);
                             break;
                         case 4:
                             System.out.println("\nEliminando juego...");
-                            eliminarJuego(conn, 3);
+                            System.out.print("Ingrese el ID del juego por favor : ");
+                            int id = 0;
+                            id = (int) validaNumbero(id);
+                            eliminarJuego(conn, id);
                             break;
                         case 5:
                             System.out.println("Saliendo del sistema. ¡Hasta pronto!");
@@ -86,13 +107,13 @@ public class ActividadBD {
         } catch (SQLException e) {
             System.out.print(" Error SQL: " + e.getMessage());
         }
-
+        scan.close();
     }
 
     // METODO 1: SELECT * FROM JUEGOS
     private static void consultaSelect(Connection conn) throws SQLException {
 
-        System.out.println(">>> Consulta 1: listar todos los juegos");
+        System.out.println("==== LISTADO DE JUEGOS ====");
 
         // 1. Creamos la sentencia SQL FIJA (no tiene parámetros)
         String sql = "SELECT ID, NOMBRE, GENERO, PUNTUACION FROM JUEGO";
@@ -208,5 +229,22 @@ public class ActividadBD {
                 System.out.println("   Puntuación actualizada en " + filas + " fila(s).");
             }
         }
+    }
+
+    private static double validaNumbero(double x) {
+        // Validar que la entrada sea un número
+        boolean entradaValida = false;
+        while (!entradaValida) {
+            if (scan.hasNextDouble()) {
+                x = scan.nextDouble();
+                entradaValida = true;
+
+            } else {
+                System.out.println("¡Error! Debe ingresar un número válido.");
+                scan.next(); // Limpiar el buffer
+                break;
+            }
+        }
+        return x;
     }
 }
