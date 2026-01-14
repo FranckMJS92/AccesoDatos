@@ -29,6 +29,7 @@ public class ActividadCRUD_Juegos {
                 // 5. Llamamos al método de consulta "listarJuegos"
                 // 6. Llamamos al método de eliminar "borrarJuegoPorNombre"
                 // 7. Llamamos al método de consulta "listarJuegos"
+                conn.close();
             }
         } catch (ClassNotFoundException e){
             System.out.print("Driver H2 no encontrado: " + e.getMessage());
