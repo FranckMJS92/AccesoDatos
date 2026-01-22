@@ -85,24 +85,24 @@ CREATE TABLE Empleado(
 );
 ```
 
-1) Crear tablas hijas con herencia
+4) Crear tablas hijas con herencia
 - Técnico
 ```sql
 CREATE TABLE Especialidad (
     especialidad especialidad_docente,
     horas_semanales int CHECK (nivel BETWEEN 1 AND 40)
-) INHERITS (Trabajador);
+) INHERITS (Empleado);
 ```
 - Gestor
 ```sql
 CREATE TABLE Area(
     complemento numeric(8,2),
     area area_administrativo
-) INHERITS (Trabajador);
+) INHERITS (Empleado);
 ```
 -- HASTA AQUI
 
-1) Insertar datos de ejemplo
+5) Insertar datos de ejemplo
 - Insertat un trabajador base (será responsable)
 ```sql
 INSERT INTO Trabajador(nombre, localizacion, emails)
