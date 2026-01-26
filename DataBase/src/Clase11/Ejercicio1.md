@@ -99,7 +99,7 @@ CREATE TABLE Gestor(
 ```
 
 5) Insertar datos de ejemplo
-- Insertat un trabajador base (será responsable)
+- Insertar un trabajador base (será responsable)
 ```sql
 INSERT INTO Trabajador(nombre, localizacion, emails)
 VALUES (
@@ -110,7 +110,7 @@ VALUES (
 ```
 - Insertar un técnico con responsable LUIS => id=1
 ```sql
-INSERT INTO Tecnico(nombre, localizacion, emails, especialidad nivel, responsable)
+INSERT INTO Tecnico(nombre, localizacion, emails, especialidad, nivel, responsable)
 VALUES (
     'Ana García',
     ('avenida','Mediterraneo', 12),

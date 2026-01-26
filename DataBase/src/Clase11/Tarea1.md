@@ -15,7 +15,7 @@ De cada empleado se almacenerá:
 
 Los empleados pueden ser:
 1) Docente
-    - especialidad: progrmación / bases_datos / sistemas
+    - especialidad: programación / bases_datos / sistemas
     - horasSemanales: entero (por ejemplo 1-40)
  
 2) Administrativo
@@ -36,7 +36,7 @@ Debes utilizar obligatoriamente:
     - Una consulta que muestre cada teléfono en una fila.
  
 --- ENTREGABLES ---
-1. creación de tipos y tablas
+1. Creación de tipos y tablas
 2. Inserción de datos de prueba (mínimo: 2 docentes, 2 administrativos, 1 supervisor)
 3. Las tres consultas pedidas.
 
@@ -74,13 +74,13 @@ CREATE TABLE Empleado(
     -- Tipo compuesto
     ubicacion Ubicacion,
 
-    -- Colección de emails
+    -- Colección de teléfonos
     telefonos varchar[],
 
-    -- Auto-referencia: responsable es otro trabajador
-    responsable int, 
-    CONSTRAINT fk_responsable
-        FOREING KEY (responsable)
+    -- Auto-referencia: supervisor es otro empleado
+    supervisor int, 
+    CONSTRAINT fk_supervisor
+        FOREING KEY (supervisor)
         REFERENCES Empleado(idEmpleado)
 );
 ```
@@ -88,46 +88,46 @@ CREATE TABLE Empleado(
 4) Crear tablas hijas con herencia
 - Técnico
 ```sql
-CREATE TABLE Especialidad (
+CREATE TABLE Docente (
     especialidad especialidad_docente,
-    horas_semanales int CHECK (nivel BETWEEN 1 AND 40)
+    horas_semanales int CHECK (horas_semanales BETWEEN 1 AND 40)
 ) INHERITS (Empleado);
 ```
 - Gestor
 ```sql
-CREATE TABLE Area(
-    complemento numeric(8,2),
+CREATE TABLE Administrativo(
     area area_administrativo
+    complemento numeric(6,2),
 ) INHERITS (Empleado);
 ```
--- HASTA AQUI
 
-5) Insertar datos de ejemplo
-- Insertat un trabajador base (será responsable)
+1) Insertar datos de ejemplo
+- Insertar un empleado base (será supervisor)
 ```sql
-INSERT INTO Trabajador(nombre, localizacion, emails)
+INSERT INTO Empleado(nombre, ubicacion, telefonos)
 VALUES (
-    'Luis Sánchez',
-    ('calle','Picasso',10),
-    ARRAY['luis@emails.com']
+    'Francisco López',
+    ('calle','Valmojado',47),
+    ARRAY['991706343','661603321']
 );
 ```
-- Insertar un técnico con responsable LUIS => id=1
+- Insertar un docente con responsable Francisco => id=1
 ```sql
-INSERT INTO Tecnico(nombre, localizacion, emails, especialidad nivel, responsable)
+INSERT INTO Docente(nombre, ubicacion, telefonos, especialidad, horas_Semanales, supervisor)
 VALUES (
-    'Ana García',
-    ('avenida','Mediterraneo', 12),
-    ARRAY['ana@emails.com', 'ana.soporte@emails.com],
-    'soporte',
-    2,
+    'Vicente Calderón',
+    ('plaza','Virgen del Puerto', 67),
+    ARRAY['648316425', '689546132'],
+    'Programación',
+    20,
     1
 );
 ```
+HASTA AQUI
 
-- Insertar un Gestor
+- Insertar un Administrativo
 ```sql
-INSERT INTO Gestor(nombre, localizacion, emails, complemento, departamento, responsable)
+INSERT INTO Administrativo(nombre, ubicacion, telefonos, area, complemento, supervisor)
 VALUES (
     'José Matarín',
     ('plaza', 'Almería', 5),
@@ -137,6 +137,8 @@ VALUES (
     1
 );
 ```
+
+
 
 6) Consultas clave
 - Ver todos (incluye subtablas)
