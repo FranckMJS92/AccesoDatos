@@ -42,20 +42,22 @@ Debes utilizar obligatoriamente:
 
 ---- SOLUCIÓN ----
 
-1) Crear tipos ENUM
+##  Creación de tipos y tablas
+
+### Crear tipos ENUM
 
 ```sql
 -- Tipo de vía
 CREATE TYPE tipo_via AS ENUM ('calle', 'avenida', 'plaza');
 
 -- Especialidad del docente
-CREATE TYPE especialidad_docente AS ENUM ('Programación','Base de DAtos','Sistemas');
+CREATE TYPE especialidad_docente AS ENUM ('Programación','Base de Datos','Sistemas');
 
 -- Área de personal administrativo
 CREATE TYPE area_administrativo AS ENUM ('Secretaría','Administración','Dirección');
 ```
 
-2) Crear tipo estructurado de UBICACION
+### Crear tipo estructurado de Ubicación
 
 ```sql
 CREATE TYPE Ubicacion AS (
@@ -64,7 +66,7 @@ CREATE TYPE Ubicacion AS (
     numero int
 );
 ```
-3) Crear la tabla base Empleado
+### Crear la tabla base Empleado
 
 ```sql
 CREATE TABLE Empleado(
@@ -85,7 +87,7 @@ CREATE TABLE Empleado(
 );
 ```
 
-4) Crear tablas hijas con herencia
+### Crear tablas hijas con herencia
 - Técnico
 ```sql
 CREATE TABLE Docente (
@@ -101,21 +103,23 @@ CREATE TABLE Administrativo(
 ) INHERITS (Empleado);
 ```
 
-1) Insertar datos de ejemplo
+## Inserción de datos de prueba
+
 - Insertar un empleado base (será supervisor)
 ```sql
 INSERT INTO Empleado(nombre, ubicacion, telefonos)
 VALUES (
-    'Francisco López',
+    'Splinter',
     ('calle','Valmojado',47),
     ARRAY['991706343','661603321']
 );
 ```
-- Insertar un docente con responsable Francisco => id=1
+- Inserción de docentes con responsable Francisco => id=1
+
 ```sql
 INSERT INTO Docente(nombre, ubicacion, telefonos, especialidad, horas_Semanales, supervisor)
 VALUES (
-    'Vicente Calderón',
+    'Leonardo',
     ('plaza','Virgen del Puerto', 67),
     ARRAY['648316425', '689546132'],
     'Programación',
@@ -123,31 +127,56 @@ VALUES (
     1
 );
 ```
-HASTA AQUI
 
-- Insertar un Administrativo
 ```sql
-INSERT INTO Administrativo(nombre, ubicacion, telefonos, area, complemento, supervisor)
+INSERT INTO Docente(nombre, ubicacion, telefonos, especialidad, horas_Semanales, supervisor)
 VALUES (
-    'José Matarín',
-    ('plaza', 'Almería', 5),
-    ARRAY[jose@emials.com],
-    950.50,
-    'IT',
+    'Donatelo',
+    ('plaza','Virgen del Puerto', 67),
+    ARRAY['648316425', '689546132'],
+    'Bsee de Datos',
+    20,
     1
 );
 ```
 
+- Insertar de administrativos con responsable Francisco => id=1
+```sql
+INSERT INTO Administrativo(nombre, ubicacion, telefonos, area, complemento, supervisor)
+VALUES (
+    'Rafael',
+    ('calle', 'Escalona', 82),
+    ARRAY['644573315','682458796'],
+    150.00,
+    'Secretaría',
+    1
+);
+```
 
+```sql
+INSERT INTO Administrativo(nombre, ubicacion, telefonos, area, complemento, supervisor)
+VALUES (
+    'Miguel Angel',
+    ('calle', 'Illescas', 96),
+    ARRAY['661514231'],
+    100.00,
+    'Administración',
+    1
+);
+```
+## Consultas
 
-6) Consultas clave
+- Una consulta que muestre solo los docentes y su supervisor (con JOIN).
+    - Una consulta que muestre los Administrativos filtrando por área y ordenando por plus.
+    - Una consulta que muestre cada teléfono en una fila.
+
 - Ver todos (incluye subtablas)
 ```sql
-SELECT * FROM Trabajador;
+SELECT * FROM Empleado;
 ```
 - Ver solo trabajadores "base"
 ```sql
-SELECT * FROM ONLY Trabajador;
+SELECT * FROM ONLY Empleado;
 ```
 - Mostar emails como filas (colección -> filas)
 ```sql 
