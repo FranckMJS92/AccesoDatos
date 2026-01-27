@@ -82,7 +82,7 @@ CREATE TABLE Empleado(
     -- Auto-referencia: supervisor es otro empleado
     supervisor int, 
     CONSTRAINT fk_supervisor
-        FOREING KEY (supervisor)
+        FOREIGN KEY (supervisor)
         REFERENCES Empleado(idEmpleado)
 );
 ```
@@ -147,8 +147,8 @@ VALUES (
     'Rafael',
     ('calle', 'Escalona', 82),
     ARRAY['644573315','682458796'],
-    150.00,
     'Secretaría',
+    150.00,
     1
 );
 ```
@@ -159,29 +159,47 @@ VALUES (
     'Miguel Angel',
     ('calle', 'Illescas', 96),
     ARRAY['661514231'],
-    100.00,
     'Administración',
+    100.00,
     1
 );
 ```
 ## Consultas
 
 - Una consulta que muestre solo los docentes y su supervisor (con JOIN).
-    - Una consulta que muestre los Administrativos filtrando por área y ordenando por plus.
-    - Una consulta que muestre cada teléfono en una fila.
 
-- Ver todos (incluye subtablas)
 ```sql
-SELECT * FROM Empleado;
+SELECT 
+    d.nombre AS docente,
+    d.especialidad,
+    d.horas_semanales,
+    e.nombre AS supervisor
+FROM Docente d
+JOIN Empleado e ON d.supervisor = e.idEmpleado;
 ```
-- Ver solo trabajadores "base"
+
+ - Una consulta que muestre los Administrativos filtrando por área y ordenando por plus.
+
 ```sql
-SELECT * FROM ONLY Empleado;
+SELECT 
+    nombre,
+    area,
+    complemento,
+    (ubicacion).tipo || ' ' || (ubicacion).nombre_via || ', ' || (ubicacion).numero AS direccion
+FROM Administrativo
+WHERE area = 'Secretaría' 
+ORDER BY complemento DESC;
 ```
-- Mostar emails como filas (colección -> filas)
+
+ - Una consulta que muestre cada teléfono en una fila.
+
 ```sql 
-SELECT nombre, unnest(emails) AS emails
-FROM Trabajador;
+SELECT 
+    idEmpleado,
+    nombre,
+    UNNEST(telefonos) AS telefono
+FROM Empleado
+ORDER BY idEmpleado;
 ```
 
 # RESUMEN ACTIVIDAD
