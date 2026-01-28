@@ -1,4 +1,4 @@
-## TEMA 4. Bases de datos orientadas a objetos
+# TEMA 4. Bases de datos orientadas a objetos
 
 ### Seccion 1. Introducción. El modeo de datos ODMG
 
