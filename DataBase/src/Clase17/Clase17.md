@@ -40,8 +40,10 @@ No se pueden mezclar 1 y 0 (excepto con _id).
 Ejemplo ocultando _id:
 ```java
 db.alumnos.find({}, { nombre: 1, _id: 0 })
-B. OPERADORES DE COMPARACIÓN
 ```
+
+B. OPERADORES DE COMPARACIÓN
+
 MongoDB usa operadores con $.
 
 Sintaxis general:
